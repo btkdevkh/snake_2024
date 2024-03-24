@@ -2,13 +2,13 @@
 const gameEl = document.querySelector("[data-game]");
 
 // Data
-let GRID = 21;
+let GRID = 27;
 let score = 0;
 let snakeDirection = "";
 let snakeBodies = [
-  { x: 16, y: 16 },
-  // { x: 17, y: 16 },
-  // { x: 18, y: 16 },
+  { x: 15, y: 14 },
+  { x: 14, y: 14 },
+  { x: 13, y: 14 },
 ];
 let currentPos = {
   x: snakeBodies[0].x,
@@ -27,7 +27,9 @@ const refresh = () => {
 
   drawFood(food);
   drawSnake(snakeBodies);
-  forwardSnake(snakeDirection);
+  if (snakeDirection !== "") {
+    forwardSnake(snakeDirection);
+  }
   drawScore(score);
   const game = setTimeout(refresh, 300);
 
@@ -77,7 +79,14 @@ const hitWall = (currentPos) => {
 const drawScore = (score) => {
   const scoreEl = document.createElement("div");
   scoreEl.classList.add("score");
-  scoreEl.textContent = score;
+
+  if (score === 0) {
+    scoreEl.style.fontSize = "1rem";
+    scoreEl.innerHTML = `PRESS CONTROL KEYS, "&#8592;&#8593;&#x2193;&#8594;"`;
+  } else {
+    scoreEl.textContent = score;
+  }
+
   gameEl.appendChild(scoreEl);
 };
 
@@ -177,7 +186,7 @@ function clear() {
 
 function replay() {
   if (confirm("Game Over, Press OK to restart !")) {
-    location.replace("/projects/test_js");
+    location.replace("/projects/snake_2024");
   }
 }
 
