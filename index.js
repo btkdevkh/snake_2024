@@ -3,13 +3,10 @@ const gameEl = document.querySelector("[data-game]");
 
 // Data
 let GRID = 27;
+let delay = 300;
 let score = 0;
 let snakeDirection = "";
-let snakeBodies = [
-  { x: 15, y: 14 },
-  { x: 14, y: 14 },
-  { x: 13, y: 14 },
-];
+let snakeBodies = [{ x: 14, y: 14 }];
 let currentPos = {
   x: snakeBodies[0].x,
   y: snakeBodies[0].y,
@@ -18,20 +15,20 @@ let food = randomFood();
 
 // Expression funcs
 const init = () => {
-  clear();
+  drawScore(score);
+  drawFood(food);
+  drawSnake(snakeBodies);
   refresh();
 };
 
 const refresh = () => {
   clear();
 
+  drawScore(score);
   drawFood(food);
   drawSnake(snakeBodies);
-  if (snakeDirection !== "") {
-    forwardSnake(snakeDirection);
-  }
-  drawScore(score);
-  const game = setTimeout(refresh, 300);
+  forwardSnake(snakeDirection);
+  const game = setTimeout(refresh, delay);
 
   if (hitWall(currentPos)) {
     console.log("GAME OVER: snake collides wall");
@@ -46,6 +43,9 @@ const refresh = () => {
 
     snakeBodies = [...snakeBodies, currentPos];
     food = randomFood();
+
+    delay = speedUp(delay);
+    console.log(delay);
     return;
   }
 
@@ -65,24 +65,13 @@ const refresh = () => {
   }
 };
 
-const hitWall = (currentPos) => {
-  if (
-    currentPos.x < 1 ||
-    currentPos.x > GRID ||
-    currentPos.y < 1 ||
-    currentPos.y > GRID
-  ) {
-    return true;
-  }
-};
-
 const drawScore = (score) => {
   const scoreEl = document.createElement("div");
   scoreEl.classList.add("score");
 
   if (score === 0) {
     scoreEl.style.fontSize = "1rem";
-    scoreEl.innerHTML = `PRESS CONTROL KEYS, "&#8592;&#8593;&#x2193;&#8594;"`;
+    scoreEl.innerHTML = `PRESS CONTROL KEYS, &#8592;&#8593;&#x2193;&#8594;`;
   } else {
     scoreEl.textContent = score;
   }
@@ -99,14 +88,14 @@ const drawFood = (food) => {
 };
 
 const drawSnake = (snakeBodies) => {
-  snakeBodies.forEach((sb, idx) => {
+  snakeBodies.forEach((sb) => {
     const snakeEl = document.createElement("div");
+    snakeEl.classList.add("snake");
 
-    if (idx === 0) {
+    if (sb.x === currentPos.x && sb.y === currentPos.y) {
       snakeEl.style.backgroundColor = "crimson";
     }
 
-    snakeEl.classList.add("snake");
     snakeEl.style.gridColumnStart = sb.x;
     snakeEl.style.gridRowStart = sb.y;
     gameEl.appendChild(snakeEl);
@@ -174,6 +163,21 @@ function randomFood() {
     x: Math.floor(Math.random() * GRID) + 1,
     y: Math.floor(Math.random() * GRID) + 1,
   };
+}
+
+function hitWall(currentPos) {
+  if (
+    currentPos.x < 1 ||
+    currentPos.x > GRID ||
+    currentPos.y < 1 ||
+    currentPos.y > GRID
+  ) {
+    return true;
+  }
+}
+
+function speedUp(delay) {
+  return Math.round((delay -= delay / GRID));
 }
 
 function snakeIsEatingFood(currentPos, food) {
