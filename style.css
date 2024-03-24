@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.game {
+  width: 80vmin;
+  height: 80vmin;
+  display: grid;
+  grid-template-columns: repeat(21, 1fr);
+  grid-template-rows: repeat(21, 1fr);
+  gap: 0.1rem;
+  border-radius: 0.3rem;
+  border: 0.5rem solid #ddd;
+  position: relative;
+}
+.snake {
+  background-color: palevioletred;
+  border-radius: 0.2rem;
+  border: 0.1rem solid #fff;
+  z-index: 2;
+}
+.food {
+  background-color: goldenrod;
+  border-radius: 50%;
+  border: 0.1rem solid #fff;
+  z-index: 2;
+}
+.score {
+  color: rgb(255, 255, 255, 0.5);
+  font-family: "Orbitron", sans-serif;
+  font-size: 7rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 100;
+}
