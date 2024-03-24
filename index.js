@@ -5,6 +5,7 @@ const gameEl = document.querySelector("[data-game]");
 let GRID = 27;
 let delay = 300;
 let score = 0;
+let maxScore = 30;
 let snakeDirection = "";
 let snakeBodies = [{ x: 14, y: 14 }];
 let currentPos = {
@@ -45,7 +46,6 @@ const refresh = () => {
     food = randomFood();
 
     delay = speedUp(delay);
-    console.log(delay);
     return;
   }
 
@@ -62,6 +62,14 @@ const refresh = () => {
       setTimeout(replay, 1000);
       return;
     }
+  }
+
+  if (score >= maxScore) {
+    document.querySelector(".score").style.fontSize = "1.5rem";
+    document.querySelector(".score").textContent = `BRAVO, YOU ARE WINNER !`;
+    clearTimeout(game);
+    setTimeout(replay, 1000);
+    return;
   }
 };
 
@@ -189,7 +197,15 @@ function clear() {
 }
 
 function replay() {
-  if (confirm("Game Over, Press OK to restart !")) {
+  if (
+    confirm(
+      `${
+        score === maxScore
+          ? "Bravo, Press OK to restart !"
+          : "Game Over, Press OK to restart !"
+      }`
+    )
+  ) {
     location.replace("/projects/snake_2024");
   }
 }
