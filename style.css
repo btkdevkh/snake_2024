@@ -21,7 +21,7 @@ body {
   grid-template-rows: repeat(27, 1fr);
   gap: 0.1rem;
   border-radius: 0.4rem;
-  border: 0.3rem solid #fff;
+  border: 0.3rem solid pink;
   position: relative;
 }
 .snake {

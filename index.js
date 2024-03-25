@@ -43,7 +43,14 @@ const refresh = () => {
     score++;
 
     snakeBodies = [...snakeBodies, currentPos];
-    food = randomFood();
+
+    console.log(snakeBodies);
+
+    for (let i = 0; i < snakeBodies.length; i++) {
+      if (food.x === snakeBodies[i].x && food.y === snakeBodies[i].y) {
+        food = randomFood();
+      }
+    }
 
     delay = speedUp(delay);
     return;
