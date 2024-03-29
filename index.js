@@ -7,19 +7,23 @@ let delay = 300;
 let score = 0;
 let maxScore = 30;
 let snakeDirection = "";
-let snakeBodies = [{ x: 14, y: 14 }];
+let snakeBodies = [
+  { x: 15, y: 14 },
+  { x: 14, y: 14 },
+  { x: 13, y: 14 },
+];
 let currentPos = {
   x: snakeBodies[0].x,
   y: snakeBodies[0].y,
 };
 let food = randomFood();
+let game;
 
 // Expression funcs
 const init = () => {
   drawScore(score);
   drawFood(food);
   drawSnake(snakeBodies);
-  refresh();
 };
 
 const refresh = () => {
@@ -29,7 +33,7 @@ const refresh = () => {
   drawFood(food);
   drawSnake(snakeBodies);
   forwardSnake(snakeDirection);
-  const game = setTimeout(refresh, delay);
+  game = setTimeout(refresh, delay);
 
   if (hitWall(currentPos)) {
     console.log("GAME OVER: snake collides wall");
@@ -60,6 +64,7 @@ const refresh = () => {
   const rest = snakeBodies.slice(1);
   for (let i = 0; i < rest.length; i++) {
     if (
+      snakeBodies.length > 3 &&
       snakeDirection !== "" &&
       snakeBodies[0].x === rest[i].x &&
       snakeBodies[0].y === rest[i].y
@@ -103,12 +108,13 @@ const drawFood = (food) => {
 };
 
 const drawSnake = (snakeBodies) => {
-  snakeBodies.forEach((sb) => {
+  snakeBodies.forEach((sb, i) => {
     const snakeEl = document.createElement("div");
     snakeEl.classList.add("snake");
 
     if (sb.x === currentPos.x && sb.y === currentPos.y) {
       snakeEl.style.backgroundColor = "crimson";
+      snakeEl.style.borderRadius = "0.5rem";
     }
 
     snakeEl.style.gridColumnStart = sb.x;
@@ -118,6 +124,8 @@ const drawSnake = (snakeBodies) => {
 };
 
 const forwardSnake = (direction) => {
+  clearTimeout(game);
+
   switch (direction) {
     case "up":
       currentPos = {
@@ -155,21 +163,35 @@ const handleKeyDown = (e) => {
     case "ArrowRight":
       if (snakeDirection === "left") return;
       snakeDirection = "right";
+
       break;
     case "ArrowLeft":
+      // If snake turn left for the first load
+      if (snakeBodies.length === 3 && snakeBodies[2].x === 13) {
+        alert(
+          `Snake's direction must be "right, up or down" on a first load !`
+        );
+        return;
+      }
+
       if (snakeDirection === "right") return;
       snakeDirection = "left";
+
       break;
     case "ArrowUp":
       if (snakeDirection === "down") return;
       snakeDirection = "up";
+
       break;
     case "ArrowDown":
       if (snakeDirection === "up") return;
       snakeDirection = "down";
+
       break;
     default:
   }
+
+  game = setTimeout(refresh, delay);
 };
 
 // Declaration funcs
