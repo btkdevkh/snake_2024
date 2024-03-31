@@ -1,8 +1,6 @@
 // Dom
 const gameEl = document.querySelector("[data-game]");
 
-console.log(location);
-
 // Data
 let GRID = 27;
 let delay = 300;
@@ -49,8 +47,6 @@ const refresh = () => {
     score++;
 
     snakeBodies = [...snakeBodies, currentPos];
-
-    console.log(snakeBodies);
 
     for (let i = 0; i < snakeBodies.length; i++) {
       if (food.x === snakeBodies[i].x && food.y === snakeBodies[i].y) {
