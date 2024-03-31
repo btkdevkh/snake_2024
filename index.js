@@ -89,7 +89,11 @@ const drawScore = (score) => {
 
   if (score === 0) {
     scoreEl.style.fontSize = "1rem";
-    scoreEl.innerHTML = `PRESS CONTROL KEYS, &#8592;&#8593;&#x2193;&#8594;`;
+    scoreEl.innerHTML = `
+      <p>Nokia 3310</p>
+      <p>Press control keys</p>
+      <p>&#8592;&#8593;&#x2193;&#8594;</p>
+    `;
   } else {
     scoreEl.textContent = score;
   }
