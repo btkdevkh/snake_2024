@@ -1,6 +1,8 @@
 // Dom
 const gameEl = document.querySelector("[data-game]");
 
+console.log(location);
+
 // Data
 let GRID = 27;
 let delay = 300;
@@ -235,7 +237,7 @@ function replay() {
       }`
     )
   ) {
-    location.replace("/projects/snake_2024");
+    location.replace(location.pathname);
   }
 }
 
