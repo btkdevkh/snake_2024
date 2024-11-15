@@ -25,13 +25,13 @@ body {
   position: relative;
 }
 .snake {
-  background-color: palevioletred;
-  border-radius: 0.2rem;
+  background-color: steelblue;
+  border-radius: 0.5rem;
   border: 0.1rem solid #fff;
   z-index: 2;
 }
 .food {
-  background-color: goldenrod;
+  background-color: green;
   border-radius: 0.5rem;
   border: 0.1rem solid #fff;
   z-index: 2;

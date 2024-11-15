@@ -146,18 +146,27 @@ const forwardSnake = (direction) => {
         x: snakeBodies[0].x - 1,
         y: snakeBodies[0].y,
       };
+
       break;
     case "right":
       currentPos = {
         x: snakeBodies[0].x + 1,
         y: snakeBodies[0].y,
       };
+
       break;
     default:
   }
 
-  snakeBodies.unshift(currentPos);
-  snakeBodies.pop();
+  if (
+    direction === "up" ||
+    direction === "down" ||
+    direction === "left" ||
+    direction === "right"
+  ) {
+    snakeBodies.unshift(currentPos);
+    snakeBodies.pop();
+  }
 };
 
 const handleKeyDown = (e) => {
